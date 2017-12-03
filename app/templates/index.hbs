@@ -1,0 +1,15 @@
+<div class="board">
+  {{#each data as |tram|}}
+    <div class="board-row">
+      <div class="board-cell">
+          {{tram.number}}
+      </div>
+      <div class="board-cell">
+          {{tram.to}}
+      </div>
+      <div class="board-cell">
+          {{from-now tram.at}}
+      </div>
+    </div>
+  {{/each}}
+</div>

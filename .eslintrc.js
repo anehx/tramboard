@@ -4,10 +4,12 @@ module.exports = {
     ecmaVersion: 2017,
     sourceType: 'module'
   },
-  extends: 'eslint:recommended',
+  plugins: ['prettier'],
+  extends: ['eslint:recommended', 'prettier'],
   env: {
     browser: true
   },
   rules: {
+    'prettier/prettier': 'error'
   }
 };
