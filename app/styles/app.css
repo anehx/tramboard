@@ -39,3 +39,13 @@ body {
 .board-cell:last-child {
   text-align: right;
 }
+
+html {
+  font-size: 4px;
+}
+
+@media (min-width: 576px) { html { font-size: 5px; } }
+@media (min-width: 768px)  { html { font-size: 6px; } }
+@media (min-width: 992px)  { html { font-size: 8px; } }
+@media (min-width: 1200px) { html { font-size: 10px; } }
+@media (min-width: 1400px) { html { font-size: 16px; } }
