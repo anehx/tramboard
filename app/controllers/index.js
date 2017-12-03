@@ -17,7 +17,7 @@ export default Controller.extend({
   _fetchData: task(function*() {
     for (;;) {
       let res = yield fetch(
-        `http://transport.opendata.ch/v1/stationboard?id=${STATION_ID}&limit=${
+        `https://transport.opendata.ch/v1/stationboard?id=${STATION_ID}&limit=${
           LIMIT
         }`
       )
