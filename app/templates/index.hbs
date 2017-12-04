@@ -1,15 +1,25 @@
 <div class="board">
-  {{#each data as |tram|}}
-    <div class="board-row">
-      <div class="board-cell">
-          {{tram.number}}
-      </div>
-      <div class="board-cell">
-          {{tram.to}}
-      </div>
-      <div class="board-cell">
-          {{from-now tram.at}}
-      </div>
-    </div>
-  {{/each}}
+  <div class="board-header">
+    <div>Bern, Sulgenau</div>
+    <div>{{moment-format (now interval=60000) 'HH:mm'}}</div>
+  </div>
+  <div class="board-body">
+    {{#unless data.length}}
+      Loading...
+    {{else}}
+      {{#each data as |tram|}}
+        <div class="board-row">
+          <div class="board-cell">
+              {{tram.number}}
+          </div>
+          <div class="board-cell">
+              {{tram.to}}
+          </div>
+          <div class="board-cell">
+              {{from-now tram.at}}
+          </div>
+        </div>
+      {{/each}}
+    {{/unless}}
+  </div>
 </div>
