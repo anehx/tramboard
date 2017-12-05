@@ -3,7 +3,7 @@
 @font-face {
   font-family: 'LEDCalculator';
   font-weight: 500;
-  src: url(fonts/ledcalculator.ttf) format('truetype');
+  src: url(/assets/fonts/ledcalculator.ttf) format('truetype');
 }
 
 * {
@@ -37,7 +37,7 @@ body {
   display: grid;
   grid-template-rows: repeat(auto-fit, 1fr);
   grid-gap: 1rem;
-  background-color: rgb(10,10,10);
+  background-color: rgb(30,30,30);
   font-family: 'LEDCalculator';
   color: orange;
 }
