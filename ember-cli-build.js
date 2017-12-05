@@ -16,10 +16,13 @@ module.exports = function(defaults) {
     },
 
     emberCliConcat: {
-      enabled: true,
-
       js: {
+        concat: true,
         useAsync: true
+      },
+
+      css: {
+        concat: true
       }
     }
   })

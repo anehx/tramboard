@@ -6,24 +6,24 @@
     <title>Tramboard</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-dns-prefetch-control" content="on">
 
-    {{content-for "head"}}
+    <link rel="dns-prefetch" href="https://transport.opendata.ch/">
+    <link href="https://transport.opendata.ch/v1/stationboard" rel="prefetch" crossorigin as="fetch" type="application/json">
 
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/tramboard.css">
+    <link rel="prefetch" href="/assets/images/favicon-512x512.png" as="image">
 
-    {{content-for "head-footer"}}
+    {{content-for 'head'}}
+    {{content-for 'concat-css'}}
+    {{content-for 'head-footer'}}
   </head>
   <body>
-    {{content-for "body"}}
-
     <noscript>
-      Javascript must be enabled.
+      <h1>Javascript must be enabled.</h1>
     </noscript>
 
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/tramboard.js"></script>
-
-    {{content-for "body-footer"}}
+    {{content-for 'body'}}
+    {{content-for 'concat-js'}}
+    {{content-for 'body-footer'}}
   </body>
 </html>
