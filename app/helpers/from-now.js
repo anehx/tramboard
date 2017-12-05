@@ -5,7 +5,7 @@ export function fromNow([at]) {
   let diff = moment.duration(at.diff(moment()))
 
   if (diff.minutes() < 1) {
-    return '🚋'
+    return 'Jetzt'
   }
 
   if (diff.minutes() < 10) {

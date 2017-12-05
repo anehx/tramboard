@@ -61,6 +61,11 @@ body {
   grid-template-columns: 1fr 1fr;
 }
 
+.board-row .board-cell:first-child {
+  padding-right: 2rem;
+  text-align: right;
+}
+
 .board-header div:last-child {
   text-align: right;
 }
