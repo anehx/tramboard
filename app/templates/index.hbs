@@ -1,25 +1,42 @@
-<div class="board">
-  <div class="board-header">
-    <div>Bern, Sulgenau</div>
-    <div>{{moment-format (now interval=60000) 'HH:mm'}}</div>
+{{#if storage.location}}
+  <div class="board">
+    <div class="board-title">{{storage.location.name}}</div>
+    <div class="board-time">{{moment-format (now interval=1000) 'HH:mm'}}</div>
+    <div class="board-body">
+      {{#unless storage.data.length}}
+        Loading...
+      {{else}}
+        {{#each storage.data as |row|}}
+          <div class="board-row">
+            <div class="board-cell">
+              {{row.number}}
+            </div>
+            <div class="board-cell">
+              {{row.to}}
+            </div>
+            <div class="board-cell" title="{{moment-format row.at 'HH:mm'}}">
+              {{from-now row.at}}
+            </div>
+          </div>
+        {{/each}}
+      {{/unless}}
+    </div>
+    <div class="board-reset">
+      <svg viewBox="0 0 24 24" title="Reset" {{action (perform reset)}}>
+        <path fill="#fff" d="M20,12c0,4.418-3.582,8-8,8s-8-3.582-8-8s3.582-8,8-8 c1.114,0,2.169,0.237,3.132,0.649l-2.504,2.674l7.493-0.25L19.485,0l-2.21,2.361C15.709,1.499,13.915,1,12,1C5.925,1,1,5.925,1,12 s4.925,11,11,11s11-4.925,11-11H20z"/>
+      </svg>
+    </div>
   </div>
-  <div class="board-body">
-    {{#unless data.length}}
-      Loading...
-    {{else}}
-      {{#each data as |tram|}}
-        <div class="board-row">
-          <div class="board-cell">
-              {{tram.number}}
-          </div>
-          <div class="board-cell">
-              {{tram.to}}
-          </div>
-          <div class="board-cell">
-              {{from-now tram.at}}
-          </div>
-        </div>
+{{else}}
+  <div class="location-select">
+    <input placeholder="Enter station..." oninput={{action (perform searchLocation) value='target.value'}} autofocus>
+
+    <ul>
+      {{#each searchLocation.lastSuccessful.value as |loc|}}
+        {{#if loc.id}}
+          <li {{action (perform setLocation) loc}}>{{loc.name}}</li>
+        {{/if}}
       {{/each}}
-    {{/unless}}
+    </ul>
   </div>
-</div>
+{{/if}}

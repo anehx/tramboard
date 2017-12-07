@@ -1,40 +1,58 @@
 import Controller from '@ember/controller'
 import { task, timeout } from 'ember-concurrency'
 import fetch from 'fetch'
-import moment from 'moment'
-
-const STATION_ID = 8589992
+import { storageFor } from 'ember-local-storage'
 
 const LIMIT = 6
 
 export default Controller.extend({
-  init() {
-    this._super(...arguments)
+  storage: storageFor('tramboard'),
 
-    this.set('data', [])
-  },
+  reset: task(function*() {
+    yield this.get('storage').clear()
+  }),
+
+  setLocation: task(function*(location) {
+    yield this.set('storage.location', location)
+  }).drop(),
+
+  searchLocation: task(function*(term) {
+    yield timeout(200)
+
+    let res = yield fetch(
+      `https://transport.opendata.ch/v1/locations?query=${term}`
+    )
+
+    let { stations } = yield res.json()
+
+    return stations
+  }).restartable(),
 
   _fetchData: task(function*() {
     for (;;) {
-      let res = yield fetch(
-        `https://transport.opendata.ch/v1/stationboard?id=${STATION_ID}&limit=${
-          LIMIT
-        }`
-      )
+      try {
+        let res = yield fetch(
+          `https://transport.opendata.ch/v1/stationboard?id=${this.get(
+            'storage.location.id'
+          )}&limit=${LIMIT}`
+        )
 
-      let { stationboard } = yield res.json()
+        let { stationboard } = yield res.json()
 
-      let data = stationboard.map(({ number, stop, to }) => {
-        return {
-          number,
-          to,
-          at: moment(stop.departure)
-        }
-      })
+        let data = stationboard.map(({ number, stop, to }) => {
+          return {
+            number,
+            to,
+            at: stop.departure
+          }
+        })
 
-      this.setProperties({ data })
+        this.set('storage.data', data)
+      } catch (e) {
+        this.set('storage.data', [])
+      }
 
-      yield timeout(15 * 1000)
+      yield timeout(5 * 1000)
     }
-  })
+  }).drop()
 })
